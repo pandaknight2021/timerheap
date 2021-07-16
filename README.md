@@ -12,10 +12,10 @@ timerheap implements a cross_platform async timerManager base on c11, The timer 
 static TimerManager& getInstance(); 
 
 // set a timer 
-pTimer SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg);
+TimerPtr SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg);
 
 // stop a timer 
-void KillTimer(pTimer tmr)
+void KillTimer(TimerPtr tmr)
 
 //timebase tick
 uint32 Now();
@@ -38,12 +38,12 @@ using namespace pandaknight;
 using namespace std;
 
 TimerManager* tmr;
-pTimer timer;
+TimerPtr timer;
 
 bool stop = false;
 
 void cb(void*p){
-    pTimer* timer = (pTimer*)p;
+    TimerPtr* timer = (TimerPtr*)p;
     cout << timer << "  " << tmr->Now() << endl;
     if(stop) {
         tmr->KillTimer(*timer);
