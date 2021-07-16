@@ -10,9 +10,9 @@
 namespace pandaknight{
 
 
-pTimer TimerManager::SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg){
+TimerPtr TimerManager::SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg){
     if(timer_cb != nullptr){
-        pTimer tmr = std::make_shared<Timer>();
+        TimerPtr tmr = std::make_shared<Timer>();
       
         if(msDelay > 0){
             tmr->expires = _tick + msDelay;
