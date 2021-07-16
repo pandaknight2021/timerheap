@@ -34,7 +34,7 @@ struct Timer{
 };
 
 
-using pTimer = std::shared_ptr<Timer>;
+using TimerPtr = std::shared_ptr<Timer>;
 
 class TimerManager{
 public:
@@ -49,11 +49,11 @@ public:
     }
  
 
-    pTimer SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg);
+    TimerPtr SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg);
     void OnTick();
 
 
-    void KillTimer(pTimer tmr){
+    void KillTimer(TimerPtr tmr){
         if(tmr.get() != nullptr){
             tmr->timer_cb = nullptr;
         }
@@ -76,14 +76,14 @@ private:
     TimerManager();
 
     struct timercmp{
-        bool operator()(const pTimer& lhs, const pTimer& rhs) {
+        bool operator()(const TimerPtr& lhs, const TimerPtr& rhs) {
             return lhs->expires > rhs->expires;
         }
     };
     
     uint32 _tick;
     uint32 _next_expires;
-    std::priority_queue<pTimer,std::vector<pTimer>, timercmp> min_heap;
+    std::priority_queue<TimerPtr,std::vector<TimerPtr>, timercmp> min_heap;
     std::mutex mu;
     std::condition_variable cv;
     std::queue<std::function<void()> > q;
