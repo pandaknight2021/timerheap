@@ -4,12 +4,12 @@ using namespace pandaknight;
 using namespace std;
 
 TimerManager* tmr;
-pTimer timer;
+TimerPtr timer;
 
 bool stop = false;
 
 void cb(void*p){
-    pTimer* timer = (pTimer*)p;
+    TimerPtr* timer = (TimerPtr*)p;
     cout << timer << "  " << tmr->Now() << endl;
     if(stop) {
         tmr->KillTimer(*timer);
