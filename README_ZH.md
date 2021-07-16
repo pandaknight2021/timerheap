@@ -13,10 +13,10 @@ TimerManager 是一个基于C11 实现的跨平台异步定时器管理器, 内�
 static TimerManager& getInstance(); 
 
 // 设置定时器
-pTimer SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg);
+TimerPtr SetTimer(uint32 msDelay, uint32 msPeriod,void (*timer_cb)(void*), void* arg);
 
 //关闭定时器 
-void KillTimer(pTimer tmr)
+void KillTimer(TimerPtr tmr)
 
 //返回当前 timebase tick
 uint32 Now();
@@ -39,12 +39,12 @@ using namespace pandaknight;
 using namespace std;
 
 TimerManager* tmr;
-pTimer timer;
+TimerPtr timer;
 
 bool stop = false;
 
 void cb(void*p){
-    pTimer* timer = (pTimer*)p;
+    TimerPtr* timer = (TimerPtr*)p;
     cout << timer << "  " << tmr->Now() << endl;
     if(stop) {
         tmr->KillTimer(*timer);
